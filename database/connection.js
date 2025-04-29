@@ -1,5 +1,6 @@
 // hami yaha database connection ko code lekhxam (sequelize ko lagi)
 const {Sequelize,DataTypes} = require('sequelize');
+
 // console.log(Sequelize)
 // const Sequelize=sequelize.sequelize //return class
 
@@ -26,4 +27,20 @@ db.sequelize=sequelize
 //     sequelize:sequelize,
 //     Sequelize   :Sequelize
 // }
+// model lai trigger gareko(Calling func  that create book model)
+const bookModel=require("./models/book.model")
+db.books=bookModel(sequelize,DataTypes)
+db.users=require("./models/user.model")(sequelize,DataTypes)
+
+
+
+// migrate gareko code (migration means if hami le code ma kei change garim vne tele lai database me reflex garnu)
+
+sequelize.sync({alter:false}).then(()=>{
+    console.log("table create vyo")
+})
+
+
+
+
 module.exports=db //exporting db object to use in other files
