@@ -3,14 +3,20 @@ const express=require("express")
 // invoking express
 const app=express();
 // const app=require("express")()
-const {db}=require("./database/connection")//importing db object from connection.js file
+const {db, books}=require("./database/connection")//importing db object from connection.js file
 
 
 // get all books
 
-app.get("/books",(req,res)=>{
+app.get("/books",async (req,res)=>{
+    //yele me books table ma vako sabai data lyayer dinxa(this is query ans i/o operation so we use async await)
+    const datas=await books.findAll()//select * from books(always return array of objects)
+    console.log(datas)
     // sending response to the client
-    res.json({message:"Get all books"}) 
+    res.json({
+        message:"Get all books",
+        datas
+    }) 
 }) 
 // get single book by id
 app.get("/books/:id",(req,res)=>{
